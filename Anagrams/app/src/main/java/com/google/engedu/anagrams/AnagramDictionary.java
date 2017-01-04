@@ -40,15 +40,20 @@ public class AnagramDictionary {
     private Random random = new Random();
 
     private HashMap<String, ArrayList<String>> lettersToWord = new HashMap<>();
+    private ArrayList<String> wordList = new ArrayList<>();
+    private HashSet<String> wordSet = new HashSet<>();
 
     public AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
         String line;
+
+
         while((line = in.readLine()) != null) {
             String word = line.trim();
             //
             //  Your code here
             //
+            wordList.add(word);
         }
     }
 
@@ -64,6 +69,13 @@ public class AnagramDictionary {
         //
         // Your code here
         //
+        for (int i=0; i<wordList.size(); i++){
+            if (wordList.get(i).length()==targetWord.length()){
+                if (sortLetters(targetWord)==sortLetters(wordList.get(i))) {
+                    result.add(targetWord);
+                }
+            }
+        }
         return result;
     }
 
@@ -77,11 +89,14 @@ public class AnagramDictionary {
 
     @VisibleForTesting
     static String sortLetters(String input) {
+        input = input.toLowerCase();
         char[] chars = input.toCharArray();
         //
         // Your code here
         //
-        return "";
+        Arrays.sort(chars);
+        String sortedWord = chars.toString();
+        return sortedWord;
     }
 
     public ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
