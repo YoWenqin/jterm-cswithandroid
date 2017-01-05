@@ -9,31 +9,34 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    public int userOverScore;
-    public int userTurnScore;
+    public int userOverScore=0;
+    public int userTurnScore=0;
     public int computerOverScore = 0;
-    public int computerTurnScore;
+    public int computerTurnScore=0;
     Random rand=new Random();
 
     public void ScoreDisplay(){
+        userOverScore+=userTurnScore;
+        computerOverScore+=computerTurnScore;
         TextView labelText = (TextView) findViewById(R.id.text1);
         labelText.setText("Your score: "+userOverScore+" Computer score:"+computerOverScore);
     }
 
-    public void Roll(View view){
-        userTurnScore = rand.nextInt(6) + 1;
 
-        if (userTurnScore==1){
+
+    public void Roll(View view){
+        int n = rand.nextInt(6) + 1;
+
+        if (n==1){
             userOverScore = 0;
             ImageView diceImage = (ImageView)findViewById(R.id.diceImage);
             diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice1));
             ScoreDisplay();
-
         }
         else{
-            userOverScore += userTurnScore;
+            userTurnScore += n;
             ScoreDisplay();
-            switch(userTurnScore){
+            switch(n){
                 case 2:
                     ImageView diceImage = (ImageView)findViewById(R.id.diceImage);
                     diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice2));
@@ -57,7 +60,27 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
 
+    public void Reset(View view){
+        userOverScore=0;
+        userTurnScore=0;
+        computerTurnScore=0;
+        computerOverScore=0;
+        ScoreDisplay();
+    }
+
+    public void Hold(View view){
+        ScoreDisplay();
+        userTurnScore=0;
+        
+    }
+
+
+    public void computerTurn(){
+        while(computerTurnScore<20){
+
+        }
     }
 
     @Override
