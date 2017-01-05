@@ -39,21 +39,33 @@ public class AnagramDictionary {
     private static final int MAX_WORD_LENGTH = 7;
     private Random random = new Random();
 
+    private ArrayList<String> wordList = new ArrayList<String>();
+
     private HashMap<String, ArrayList<String>> lettersToWord = new HashMap<>();
-    private ArrayList<String> wordList = new ArrayList<>();
-    private HashSet<String> wordSet = new HashSet<>();
+    //private ArrayList<String> wordList = new ArrayList<>();
+    private HashSet<String> wordSet = new HashSet<String>();
 
     public AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
         String line;
-
 
         while((line = in.readLine()) != null) {
             String word = line.trim();
             //
             //  Your code here
             //
-            wordList.add(word);
+            wordSet.add(word);
+
+            if (lettersToWord.containsKey(sortLetters(word))){
+                lettersToWord.get(sortLetters(word)).add(word);
+            }
+
+            else{
+                ArrayList<String> arr = new ArrayList<String>();
+                arr.add(word);
+                lettersToWord.put(sortLetters(word), arr);
+            }
+
         }
     }
 
@@ -61,7 +73,11 @@ public class AnagramDictionary {
         //
         // Your code here
         //
-        return true;
+        if (wordSet.contains(word))
+            if ((!word.contains(base))) {
+                return true;
+            }
+        return false;
     }
 
     public ArrayList<String> getAnagrams(String targetWord) {
@@ -95,7 +111,7 @@ public class AnagramDictionary {
         // Your code here
         //
         Arrays.sort(chars);
-        String sortedWord = chars.toString();
+        String sortedWord = String.valueOf(chars);
         return sortedWord;
     }
 
@@ -104,6 +120,12 @@ public class AnagramDictionary {
         //
         // Your code here
         //
+        for (char alphaLetter='a'; alphaLetter <= 'z'; alphaLetter++){
+            word += alphaLetter;
+            if (lettersToWord.containsKey(sortLetters(word))){
+                result.addAll(lettersToWord.get(sortLetters(word)));
+            }
+        }
         return result;
     }
 
