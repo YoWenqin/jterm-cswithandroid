@@ -54,18 +54,19 @@ public class AnagramDictionary {
             //
             //  Your code here
             //
-            wordSet.add(word);
+            if (!TextUtils.isEmpty(word)){
+                wordSet.add(word);
 
-            if (lettersToWord.containsKey(sortLetters(word))){
-                lettersToWord.get(sortLetters(word)).add(word);
+                String sortedWord = sortLetters(word);
+                if (lettersToWord.containsKey(sortedWord)){
+                    lettersToWord.get(sortedWord).add(word);
+                }
+                else{
+                    ArrayList<String> arr = new ArrayList<String>();
+                    arr.add(word);
+                    lettersToWord.put(sortedWord, arr);
+                }
             }
-
-            else{
-                ArrayList<String> arr = new ArrayList<String>();
-                arr.add(word);
-                lettersToWord.put(sortLetters(word), arr);
-            }
-
         }
     }
 
@@ -79,7 +80,7 @@ public class AnagramDictionary {
             }
         return false;
     }
-
+/*
     public ArrayList<String> getAnagrams(String targetWord) {
         ArrayList<String> result = new ArrayList<String>();
         //
@@ -102,7 +103,7 @@ public class AnagramDictionary {
         //
         return true;
     }
-
+*/
     @VisibleForTesting
     static String sortLetters(String input) {
         input = input.toLowerCase();
@@ -117,22 +118,34 @@ public class AnagramDictionary {
 
     public ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
         ArrayList<String> result = new ArrayList<String>();
+
         //
         // Your code here
         //
-        for (char alphaLetter='a'; alphaLetter <= 'z'; alphaLetter++){
-            word += alphaLetter;
-            if (lettersToWord.containsKey(sortLetters(word))){
-                result.addAll(lettersToWord.get(sortLetters(word)));
+        if (word!=null && !word.isEmpty()){
+            for (char c = 'a'; c <= 'z'; c++){
+                word += c;
+                if (lettersToWord.containsKey(sortLetters(word))){
+                    result.addAll(lettersToWord.get(sortLetters(word)));
+                }
+            }
+            if (!result.isEmpty()) {
+                return result;
             }
         }
-        return result;
+        return null;
     }
 
     public String pickGoodStarterWord() {
         //
         // Your code here
         //
-        return "stop";
+        Object[] keys = lettersToWord.keySet().toArray();
+        String next = (String) keys[random.nextInt(keys.length)];
+        while (lettersToWord.get(next).size() < MIN_NUM_ANAGRAMS) {
+            next = (String) keys[random.nextInt(keys.length)];
+        }
+        ArrayList<String> words = lettersToWord.get(next);
+        return words.get(random.nextInt(words.size()));
     }
 }
