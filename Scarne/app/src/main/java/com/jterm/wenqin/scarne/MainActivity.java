@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void TurnScoreDisplay(){
         TextView labelText = (TextView) findViewById(R.id.text2);
+        Log.d("UserTurnScore:", String.valueOf(userTurnScore));
         labelText.setText("Your turn score: "+userTurnScore+" Computer turn score: "+computerTurnScore);
     }
     public void userRoll(View view){
@@ -114,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     public void holdDice(){
         Log.d(TAG, "Dice held here");
         OverScoreDisplay();
+
+
         userTurn = !userTurn;
         Button rollButton = (Button)findViewById(R.id.rollButton);
         rollButton.setEnabled(userTurn);
@@ -128,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.d(TAG, "User turn switched off");
             computerTurn();
-            Log.d(TAG, "User turn switched off");
         }
 
     }
@@ -139,18 +141,21 @@ public class MainActivity extends AppCompatActivity {
         final Runnable mRunnable = new Runnable(){
             @Override
             public void run() {
+                Log.d(TAG, "Computer rolls dice");
+                if (computerTurnScore<20){
                 rollDice();
                 mHandler.postDelayed(this, 1000);
-            }
+            }}
         };
 
-        while (computerTurnScore<20){
-            mHandler.postDelayed(mRunnable, 1000);
-        }
+        mHandler.postDelayed(mRunnable,1000);
 
-        mHandler.removeCallbacks(mRunnable);
+
         if (computerTurnScore >= 20){
+
             holdDice();
+            Log.d(TAG, "RemoveCallBacks for handler");
+            mHandler.removeCallbacks(mRunnable);
         }
     }
 

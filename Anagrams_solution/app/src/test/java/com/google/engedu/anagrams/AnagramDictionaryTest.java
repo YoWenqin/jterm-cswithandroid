@@ -17,10 +17,17 @@
 package com.google.engedu.anagrams;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.*;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.util.List;
@@ -29,7 +36,8 @@ import java.util.List;
 /**
  * Tests for AnagramDictionary
  */
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
 public class AnagramDictionaryTest {
     String[] words = {"act", "cat", "dog", "pot", "pots", "spots", "stop", "stops"};
 
