@@ -18,6 +18,7 @@ package com.google.engedu.anagrams;
 
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.w3c.dom.Text;
 
@@ -57,6 +58,7 @@ public class AnagramDictionary {
 
     @VisibleForTesting
     public AnagramDictionary(String[] words) {
+        Log.d("Testing constructor", "reading test dictionary");
         for (int i = 0; i < words.length; i++) {
             addWordToDict(words[i]);
         }

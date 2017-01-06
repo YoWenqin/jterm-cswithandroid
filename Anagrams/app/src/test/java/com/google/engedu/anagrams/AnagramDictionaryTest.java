@@ -16,17 +16,23 @@
 
 package com.google.engedu.anagrams;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 
 /**
  * Tests for AnagramDictionary
  */
 
+
+/*
 public class AnagramDictionaryTest {
     @Test
     public void testSortLetters() {
@@ -43,3 +49,28 @@ public class AnagramDictionaryTest {
        // TODO: This may need to be in AndroidTest
     }
 }
+*/
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
+
+public class AnagramDictionaryTest {
+
+    @Before
+    public void beforeEach() {
+        PowerMockito.mockStatic(Log.class);
+    }
+
+    @Test
+    public void testAddition() {
+        assertEquals(3, 1 + 2);
+    }
+
+    @Test
+    public void sortLetters(){
+        assertEquals("a",AnagramDictionary.sortLetters("a"));
+        assertEquals("opst",AnagramDictionary.sortLetters("stop"));
+        assertEquals("abcdefg", AnagramDictionary.sortLetters("abcdefg"));
+    }
+}
+

@@ -16,8 +16,10 @@
 
 package com.google.engedu.anagrams;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -38,6 +40,44 @@ import java.util.List;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Log.class})
+
+public class AnagramDictionaryTest {
+
+    @Before
+    public void beforeEach() {
+        PowerMockito.mockStatic(Log.class);
+    }
+
+    @Test
+    public void testAddition() {
+        assertEquals(3, 1 + 2);
+    }
+
+    @Test
+    public void sortLetters(){
+        assertEquals("a",AnagramDictionary.sortLetters("a"));
+        assertEquals("opst",AnagramDictionary.sortLetters("stop"));
+        assertEquals("abcdefg", AnagramDictionary.sortLetters("abcdefg"));
+    }
+
+    @Test
+    public void isAnagram(){
+        assertEquals(true,AnagramDictionary.isAnagram("post","stop"));
+        assertEquals(false, AnagramDictionary.isAnagram(null,""));
+        assertFalse(AnagramDictionary.isAnagram(""," "));
+    }
+
+    @Test
+    public void testGetAnagrams(){
+        String[] strings = {"act", "cat", "cats"};
+        AnagramDictionary dict = new AnagramDictionary(strings);
+        List<String> anagrams = dict.getAnagrams("act");
+        assertTrue(anagrams.contains("cat"));
+    }
+}
+
+
+/*
 public class AnagramDictionaryTest {
     String[] words = {"act", "cat", "dog", "pot", "pots", "spots", "stop", "stops"};
 
@@ -80,6 +120,9 @@ public class AnagramDictionaryTest {
      * isGoodWord("spots", "post")        | true
      * isGoodWord("apostrophe", "post")   | false
      */
+
+
+/*
     @Test
     public void testIsGoodWord() {
         AnagramDictionary dict = new AnagramDictionary(words);
@@ -88,3 +131,4 @@ public class AnagramDictionaryTest {
         assertFalse(dict.isGoodWord("abcdefg", "cat"));
     }
 }
+ */
