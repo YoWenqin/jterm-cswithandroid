@@ -22,20 +22,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public void OverScoreDisplay(){
-        userOverScore+=userTurnScore;
-        computerOverScore+=computerTurnScore;
         TextView labelText = (TextView) findViewById(R.id.text1);
         labelText.setText("Your overall score: "+userOverScore+" Computer overall score: "+computerOverScore);
     }
 
     public void TurnScoreDisplay(){
         TextView labelText = (TextView) findViewById(R.id.text2);
-        Log.d("UserTurnScore:", String.valueOf(userTurnScore));
+        Log.d("UserTurnScore", String.valueOf(userTurnScore));
         labelText.setText("Your turn score: "+userTurnScore+" Computer turn score: "+computerTurnScore);
     }
-    public void userRoll(View view){
-        rollDice();
-        }
 
     public void diceDisplay(ImageView diceImage, int n){
         switch(n){
@@ -60,6 +55,26 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void Reset(View view){
+        mHandler.removeCallbacks(mRunnable);
+        userOverScore=0;
+        userTurnScore=0;
+        computerTurnScore=0;
+        computerOverScore=0;
+        TurnScoreDisplay();
+        OverScoreDisplay();
+        userTurn=true;
+        Button rollButton = (Button)findViewById(R.id.rollButton);
+        rollButton.setEnabled(true);
+        Button holdButton = (Button)findViewById(R.id.holdButton);
+        holdButton.setEnabled(true);
+    }
+
+    public void userRoll(View view){
+        rollDice();
+        }
+
     public void rollDice(){
         Log.d(TAG, "Dice rolled here");
         int n = rand.nextInt(6) + 1;
@@ -76,8 +91,10 @@ public class MainActivity extends AppCompatActivity {
         //computer's turn:
         else{
             if (n==1){
-                computerTurnScore=0;
+                Log.d("ComputerTurnScore", String.valueOf(computerTurnScore));
+                computerTurnScore= 0;
                 computerOverScore = 0;
+                mHandler.removeCallbacks(mRunnable);
             }
             else{
                 computerTurnScore += n;
@@ -85,78 +102,66 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageView diceImage = (ImageView)findViewById(R.id.diceImage);
+        TurnScoreDisplay();
+        diceDisplay(diceImage, n);
         if (n==1){
-            Log.d("UpdateTurnScore" , String.valueOf(userTurnScore));
-            TurnScoreDisplay();
-            diceDisplay(diceImage,n);
             holdDice();
         }
-        else{
-            TurnScoreDisplay();
-            diceDisplay(diceImage,n);
-        }
 
-    }
-
-    public void Reset(View view){
-        userOverScore=0;
-        userTurnScore=0;
-        computerTurnScore=0;
-        computerOverScore=0;
-        TurnScoreDisplay();
-        OverScoreDisplay();
     }
 
     public void userHold(View view){
-
         holdDice();
     }
 
     public void holdDice(){
         Log.d(TAG, "Dice held here");
+        if (userTurn==true){
+            userOverScore+=userTurnScore;
+            userTurnScore=0;
+        }
+        else{
+            computerOverScore+=computerTurnScore;
+            computerTurnScore=0;
+        }
         OverScoreDisplay();
-
+        TurnScoreDisplay();
 
         userTurn = !userTurn;
         Button rollButton = (Button)findViewById(R.id.rollButton);
         rollButton.setEnabled(userTurn);
         Button holdButton = (Button)findViewById(R.id.holdButton);
         holdButton.setEnabled(userTurn);
-        Log.d("userTurn", String.valueOf(userTurn));
 
         if (userTurn==true) {
-
             Log.d(TAG, "User turn switched on");
         }
         else {
             Log.d(TAG, "User turn switched off");
             computerTurn();
         }
-
     }
 
+    final Handler mHandler = new Handler();
+    final Runnable mRunnable = new Runnable(){
+        @Override
+        public void run() {
+            Log.d(TAG, "Computer rolls dice");
+            if (computerTurnScore<20){
+                mHandler.postDelayed(this, 2000);
+                rollDice();
+            }
+            else{
+                Log.d(TAG, "ComputerTurnScore>=20");
+                holdDice();
+            }
+        }
+    };
 
     public void computerTurn(){
-        final Handler mHandler = new Handler();
-        final Runnable mRunnable = new Runnable(){
-            @Override
-            public void run() {
-                Log.d(TAG, "Computer rolls dice");
-                if (computerTurnScore<20){
-                rollDice();
-                mHandler.postDelayed(this, 1000);
-            }}
-        };
+        mHandler.postDelayed(mRunnable,2000);
+        //mHandler.removeCallbacks(mRunnable);
 
-        mHandler.postDelayed(mRunnable,1000);
-
-
-        if (computerTurnScore >= 20){
-
-            holdDice();
-            Log.d(TAG, "RemoveCallBacks for handler");
-            mHandler.removeCallbacks(mRunnable);
-        }
     }
 
     @Override
