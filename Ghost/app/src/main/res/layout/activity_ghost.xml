@@ -36,6 +36,7 @@
             android:id="@+id/ghostText"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
+            android:text="usua"
             />
 
         <TextView
@@ -47,6 +48,27 @@
             android:layout_below="@id/ghostText"
             android:layout_alignParentStart="true"
             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gameStatus">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHALLENGE"
+                android:onClick="Challenge"
+                android:id="@+id/challengeButton"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RESTART"
+                android:onClick="Restart"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

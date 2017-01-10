@@ -37,21 +37,27 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 Log.d(TAG, "Display dice1 here");
                 diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice1));
+                diceImage.setContentDescription("Roll 1");
                 break;
             case 2:
                 diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice2));
+                diceImage.setContentDescription("Roll 2");
                 break;
             case 3:
                 diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice3));
+                diceImage.setContentDescription("Roll 3");
                 break;
             case 4:
                 diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice4));
+                diceImage.setContentDescription("Roll 4");
                 break;
             case 5:
                 diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice5));
+                diceImage.setContentDescription("Roll 5");
                 break;
             case 6:
                 diceImage.setImageDrawable(getResources().getDrawable(R.drawable.dice6));
+                diceImage.setContentDescription("Roll 6");
                 break;
         }
     }

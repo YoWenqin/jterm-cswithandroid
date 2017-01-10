@@ -30,7 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class SimpleDictionaryTest {
-    String[] wordsArray={"a","apple","cat"};
+    String[] wordsArray={"a","apple","applepie","cat"};
 
     @Test
     public void testIsWord() {
@@ -45,6 +45,9 @@ public class SimpleDictionaryTest {
         assertEquals("cat", dict.getAnyWordStartingWith("c"));
         assertEquals(null, dict.getAnyWordStartingWith(("b")));
         System.out.println(dict.getAnyWordStartingWith(""));
+        System.out.println(dict.getAnyWordStartingWith("applepies"));
+
+
 
     }
 }

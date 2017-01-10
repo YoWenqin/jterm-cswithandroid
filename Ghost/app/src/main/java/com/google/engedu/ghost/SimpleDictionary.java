@@ -61,10 +61,24 @@ public class SimpleDictionary implements GhostDictionary {
 
         while (low <= high){
             mid = (low + high)/2;
-            String resultWord = arr.get(mid);
-            int compare = resultWord.compareTo(word);
+            String resultWord = arr.get(mid); //resultWord="apple"
+            int compare = resultWord.compareTo(word);//word="applepie"
+
+            /*
             if (compare > 0 && !resultWord.substring(0,word.length()).equals(word)){
-                high = mid - 1;
+                    high = mid - 1;
+            }
+            */
+            if (compare > 0){
+                if (resultWord.length()<word.length()){
+                    return null;
+                }
+                else if (!resultWord.substring(0,word.length()).equals(word)){
+                    high = mid -1;
+                }
+                else{
+                    return resultWord;
+                }
             }
             else if (compare < 0){
                 low = mid + 1;
@@ -81,7 +95,6 @@ public class SimpleDictionary implements GhostDictionary {
         if (prefix.equals(null)){
             int index = mRandom.nextInt(words.size());
             word = words.get(index);
-
         }
         else{
             word=BinarySearch(words,prefix);
