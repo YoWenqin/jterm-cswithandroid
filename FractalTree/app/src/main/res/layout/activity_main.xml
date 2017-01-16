@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jterm.wenqin.fractaltree.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_main">
+
+        <com.jterm.wenqin.fractaltree.FractalView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tree_view"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tree_view"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="depth"
+                android:layout_alignParentLeft="true"/>
+
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="-"
+                android:id="@+id/decrease_depth"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/depth"
+                android:text="10"
+                android:textAlignment="center"/>
+
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="+"
+                android:id="@+id/increase_depth"
+                android:layout_marginRight="16dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REDRAW"
+                android:id="@+id/reset"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

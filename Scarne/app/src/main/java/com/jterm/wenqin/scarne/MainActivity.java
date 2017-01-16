@@ -1,5 +1,6 @@
 package com.jterm.wenqin.scarne;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Reset(View view){
+        Reset();
+    }
+
+    public void Reset(){
         mHandler.removeCallbacks(mRunnable);
         userOverScore=0;
         userTurnScore=0;
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         if (n==1){
             holdDice();
         }
-
+        checkForWin();
     }
 
     public void userHold(View view){
@@ -175,4 +180,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    private void computerWins(){
+        startActivity(new Intent(this, LoseActivity.class));
+        Reset();
+    }
+
+    private void playerWins(){
+        Intent intent = new Intent(this, WinActivity.class);
+        intent.putExtra(USER_SCORE,String.valueOf(userOverScore+userTurnScore));
+        startActivity(intent);
+
+        Reset();
+    }
+
+    public static final String USER_SCORE = "com.wenqin.scarne.USER_SCORE";
+
+    public void checkForWin(){
+        if (userOverScore+userTurnScore>30){
+            playerWins();
+        }
+        else if (computerOverScore+computerTurnScore>30){
+            computerWins();
+        }
+    }
+
 }

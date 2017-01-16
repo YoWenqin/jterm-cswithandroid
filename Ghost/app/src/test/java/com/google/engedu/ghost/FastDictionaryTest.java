@@ -27,11 +27,28 @@ import static org.junit.Assert.assertTrue;
  *  limitations under the License.
  */
 public class FastDictionaryTest {
+    String[] wordsArray={"a","apple","applepie","cat"};
+
+
     @Test
     public void testIsWord() {
+        ArrayList<String> words = new ArrayList<>(Arrays.asList(wordsArray));
+        FastDictionary dict = new FastDictionary(words);
+        assertEquals(true, dict.isWord("a"));
     }
+
 
     @Test
     public void testGetAnyWordStartingWith() {
+        ArrayList<String> words = new ArrayList<>(Arrays.asList(wordsArray));
+        FastDictionary dict = new FastDictionary(words);
+
+        assertEquals("apple",dict.getAnyWordStartingWith("a"));
+        assertEquals("cat", dict.getAnyWordStartingWith("c"));
+        assertEquals(null, dict.getAnyWordStartingWith(("b")));
+        System.out.println(dict.getAnyWordStartingWith(""));
+        System.out.println(dict.getAnyWordStartingWith("applepies"));
+
     }
+
 }

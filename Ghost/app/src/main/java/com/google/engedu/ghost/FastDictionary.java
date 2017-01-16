@@ -21,7 +21,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class FastDictionary implements GhostDictionary {
@@ -46,6 +48,7 @@ public class FastDictionary implements GhostDictionary {
             root.add(word);
         }
     }
+
 
     @Override
     public boolean isWord(String word) {
